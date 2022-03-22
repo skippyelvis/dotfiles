@@ -44,7 +44,7 @@ EOF
 " treesitter
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = {"python", "vim", "bash", "javascript", "c", "go"},
   sync_install = false,
   highlight = {
     enable = true,
