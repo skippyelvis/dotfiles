@@ -1,0 +1,3 @@
+kitty/kitty-themes/themes/*.conf
+spicetify/*/*
+!spicetify/*.ini
