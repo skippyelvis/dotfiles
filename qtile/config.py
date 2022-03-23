@@ -1,8 +1,9 @@
-from libqtile import bar, layout, widget
+from libqtile import layout, bar, widget
 from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import Key as K
 from libqtile.lazy import lazy
-import subprocess
+import random
+import os
 
 m = "mod4"
 
@@ -28,6 +29,8 @@ def admin_keys():
             desc="Increase volume"),
         K([], "XF86AudioLowerVolume", lazy.spawn("amixer -q sset Master 5%-"),
             desc="Decrease volume"),
+        K([], "XF86AudioMute", lazy.spawn("amixer -q sset Master 0%"),
+            desc="Mute volume"),
     ]
     return ak
 
@@ -112,18 +115,24 @@ keys = [
 ]
 
 layouts = [
-    layout.MonadTall(padding=5),
-    layout.MonadWide(padding=5),
-    layout.Matrix(padding=5),
+    layout.MonadTall(margin=2),
+    layout.MonadWide(margin=2),
 ]
+
+def rand_wallpaper():
+    d = "/home/homieja/Pictures/wallpapers/"
+    f = os.listdir(d)
+    r = random.randint(0, len(f)-1)
+    return os.path.join(d, f[r])
 
 custombar1 = bar.Bar([
     widget.Clock(),
+    widget.GroupBox(),
     widget.Prompt(),
 ], 30)
 
 screens = [
-    Screen(top=custombar1)
+    Screen(top=custombar1, wallpaper=rand_wallpaper(), wallpaper_mode="fill")
 ]
 
 mouse = [

@@ -1,0 +1,8 @@
+alias cl="clear"
+alias ls="exa --icons"
+alias cat="bat"
+alias vim="nvim"
+alias p3="python3"
+alias pipi="pip install --user"
+alias install="sudo pacman -S"
+alias yinstall="yay -S"
