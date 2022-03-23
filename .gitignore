@@ -1,3 +1,4 @@
 kitty/kitty-themes/themes/*.conf
 spicetify/*/*
 !spicetify/*.ini
+**/__pycache__
