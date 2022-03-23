@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "source $(pwd)/aliases" >> ~/.zshrc
+echo "source $(pwd)/myrc" >> ~/.zshrc
 echo "source $(pwd)/funcs" >> ~/.zshrc
