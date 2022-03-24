@@ -1,9 +1,10 @@
 from libqtile import layout, bar, widget
 from libqtile.config import Click, Drag, Group, Match, Screen
-from libqtile.config import Key as K
+from libqtile.config import Key as K, KeyChord as KC
 from libqtile.lazy import lazy
-import random
-import os
+from utils import incbrightness, incvolume, rand_wallpaper  # , set_rand_wallpaper, scall
+
+# my comfy qtile config
 
 m = "mod4"
 
@@ -11,32 +12,42 @@ def launch_keys():
     name = lambda x: f"Launch {x}"
     lk = [
         K([m], "Return", lazy.spawn("kitty"), desc=name("kitty terminal")),
-        K([m], "u", lazy.spawn("google-chrome-stable"), desc=name("chrome")),
-        K([m], "i", lazy.spawn("kitty nvim"), desc=name("nvim")),
-        K([m], "o", lazy.spawn("kitty ranger"), desc=name("ranger file explorer")),
+        K([m, "shift"], "Return", lazy.spawn("google-chrome-stable"), desc=name("chrome")),
         K([m], "p", lazy.spawncmd(), desc=name("command")),
+        KC([m, "shift"], "p", [
+            K([], "t", lazy.spawn("kitty")),
+            K([], "c", lazy.spawn("google-chrome-stable")),
+            K([], "n", lazy.spawn("kitty nvim")),
+            K([], "r", lazy.spawn("kitty ranger")),
+            K([], "m", lazy.spawn("google-chrome-stable outlook.office.com/mail/")),
+        ], mode="Launch mode")
     ]
     return lk
 
 def admin_keys():
     ak = [
         K([m, "control"], "r", lazy.reload_config(), desc="Reload config"),
-        K([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+"),
+        K([], "XF86MonBrightnessUp", lazy.spawn(incbrightness("mon", 5)),
             desc="Increase brightness"),
-        K([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-"),
+        K([], "XF86MonBrightnessDown", lazy.spawn(incbrightness("mon", -5)),
             desc="Decrease brightness"),
-        K([], "XF86AudioRaiseVolume", lazy.spawn("amixer -q sset Master 5%+"),
+        K([], "XF86KbdBrightnessUp", lazy.spawn(incbrightness("kbd", 5)),
+            desc="Increase brightness"),
+        K([], "XF86KbdBrightnessDown", lazy.spawn(incbrightness("kbd", -5)),
+            desc="Decrease brightness"),
+        K([], "XF86AudioRaiseVolume", lazy.spawn(incvolume(5)),
             desc="Increase volume"),
-        K([], "XF86AudioLowerVolume", lazy.spawn("amixer -q sset Master 5%-"),
+        K([], "XF86AudioLowerVolume", lazy.spawn(incvolume(-5)),
             desc="Decrease volume"),
         K([], "XF86AudioMute", lazy.spawn("amixer -q sset Master 0%"),
             desc="Mute volume"),
+        K([], "XF86Sleep", lazy.spawn("lockscreen.sh"), desc="Lock screen"),
     ]
     return ak
 
 def layout_keys():
     lok = [
-        K([m, "shift"], "Return", lazy.layout.toggle_split(), 
+        K([m, "shift"], "Tab", lazy.layout.toggle_split(), 
             desc="Toggle b/t split and unsplit stacks"),
         K([m], "Tab", lazy.next_layout(), desc="Switch to next layout")
     ]
@@ -119,16 +130,13 @@ layouts = [
     layout.MonadWide(margin=2),
 ]
 
-def rand_wallpaper():
-    d = "/home/homieja/Pictures/wallpapers/"
-    f = os.listdir(d)
-    r = random.randint(0, len(f)-1)
-    return os.path.join(d, f[r])
 
 custombar1 = bar.Bar([
     widget.Clock(),
     widget.GroupBox(),
     widget.Prompt(),
+    widget.Spacer(),
+    widget.Chord(),
 ], 30)
 
 screens = [
