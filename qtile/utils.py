@@ -1,6 +1,7 @@
 import os
 import subprocess
 import random
+from libqtile.lazy import lazy
 
 def scall(cmd):
     return subprocess.call(cmd.split(" "))
@@ -9,6 +10,13 @@ def magdlt(inc):
     mag = abs(inc)
     dlt = "+" if inc > 0 else "-"
     return mag, dlt
+
+def spawnesc(cmd):
+    handlers = [
+        lazy.spawn(cmd),
+        lazy.spawn("xdotool key Escape")
+    ]
+    return handlers
 
 device_map = {
         "mon": "intel_backlight",

@@ -2,7 +2,7 @@ from libqtile import layout, bar, widget
 from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import Key as K, KeyChord as KC
 from libqtile.lazy import lazy
-from utils import incbrightness, incvolume, rand_wallpaper  # , set_rand_wallpaper, scall
+from utils import incbrightness, incvolume, rand_wallpaper, spawnesc 
 
 # my comfy qtile config
 
@@ -14,19 +14,20 @@ def launch_keys():
         K([m], "Return", lazy.spawn("kitty"), desc=name("kitty terminal")),
         K([m, "shift"], "Return", lazy.spawn("google-chrome-stable"), desc=name("chrome")),
         K([m], "p", lazy.spawncmd(), desc=name("command")),
-        KC([m, "shift"], "p", [
-            K([], "t", lazy.spawn("kitty")),
-            K([], "c", lazy.spawn("google-chrome-stable")),
-            K([], "n", lazy.spawn("kitty nvim")),
-            K([], "r", lazy.spawn("kitty ranger")),
-            K([], "m", lazy.spawn("google-chrome-stable outlook.office.com/mail/")),
-        ], mode="Launch mode")
+        KC([m], "0", [
+            K([], "t", *spawnesc("kitty")),
+            K([], "c", *spawnesc("google-chrome-stable")),
+            K([], "n", *spawnesc("kitty nvim")),
+            K([], "r", *spawnesc("kitty ranger")),
+            K([], "m", *spawnesc("google-chrome-stable outlook.office.com/mail/")),
+        ], mode="Launch")
     ]
     return lk
 
 def admin_keys():
     ak = [
         K([m, "control"], "r", lazy.reload_config(), desc="Reload config"),
+        K([m, "control"], "q", lazy.shutdown(), desc="Shutdown"),
         K([], "XF86MonBrightnessUp", lazy.spawn(incbrightness("mon", 5)),
             desc="Increase brightness"),
         K([], "XF86MonBrightnessDown", lazy.spawn(incbrightness("mon", -5)),
@@ -35,13 +36,16 @@ def admin_keys():
             desc="Increase brightness"),
         K([], "XF86KbdBrightnessDown", lazy.spawn(incbrightness("kbd", -5)),
             desc="Decrease brightness"),
-        K([], "XF86AudioRaiseVolume", lazy.spawn(incvolume(5)),
+        K([], "XF86AudioRaiseVolume", lazy.spawn(incvolume(2)),
             desc="Increase volume"),
-        K([], "XF86AudioLowerVolume", lazy.spawn(incvolume(-5)),
+        K([], "XF86AudioLowerVolume", lazy.spawn(incvolume(-2)),
             desc="Decrease volume"),
         K([], "XF86AudioMute", lazy.spawn("amixer -q sset Master 0%"),
             desc="Mute volume"),
         K([], "XF86Sleep", lazy.spawn("lockscreen.sh"), desc="Lock screen"),
+        KC([m], "s", [
+            K([], "w", *spawnesc("nm-connection-editor"), desc="Network settings")
+        ], mode="Settings")
     ]
     return ak
 
@@ -137,6 +141,9 @@ custombar1 = bar.Bar([
     widget.Prompt(),
     widget.Spacer(),
     widget.Chord(),
+    widget.Wlan(format="<b>{essid}!</b>", mouse_callbacks={
+        "Button1": lazy.spawn("nm-connection-editor")
+        }),
 ], 30)
 
 screens = [
