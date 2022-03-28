@@ -16,3 +16,5 @@ alias sshixd="ssh $uoid@$ixd"
 
 export EDITOR="nvim"
 export RANGER_LOAD_DEFAULT_RC="FALSE"
+
+export PATH=$PATH:$HOME/.local/bin
