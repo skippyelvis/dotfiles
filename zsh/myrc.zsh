@@ -6,6 +6,7 @@ alias pipi="pip install --user"
 alias pins="sudo pacman -S"
 alias yins="yay -S"
 alias icat="kitty +icat"
+alias tree="exa --tree --icons"
 
 export ix="ix.cs.uoregon.edu"
 export ixd="ix-dev.cs.uoregon.edu"
