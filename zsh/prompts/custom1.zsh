@@ -9,7 +9,7 @@ status_good_color="151"
 status_good="%F{${status_good_color}}:) %f" 
 status_bad_color="196"
 status_bad_bk_color="184"
-status_bad="%K{${status_bad_bk_color}}%F{${status_bad_color}}:(%f%k "
+status_bad="%K{${status_bad_bk_color}}%F{${status_bad_color}}%B:(%b%f%k "
 status_="%(?.${status_good}.${status_bad})"
 
 user="%F{${username_color}}%n%f"
