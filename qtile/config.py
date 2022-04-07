@@ -1,7 +1,9 @@
-from libqtile import layout, bar, widget
+from libqtile import layout, bar, widget, hook
 from libqtile.config import Click, Drag, Group, Match, Screen
 from libqtile.config import Key as K, KeyChord as KC
 from libqtile.lazy import lazy
+import os
+import subprocess
 from utils import incbrightness, incvolume, rand_wallpaper, spawnesc 
 
 # my comfy qtile config
@@ -9,6 +11,11 @@ from utils import incbrightness, incvolume, rand_wallpaper, spawnesc
 m = "mod4"
 # terminal = "st"
 terminal = "kitty"
+
+@hook.subscribe.startup_complete
+def autostart():
+    user = os.getlogin()
+    subprocess.run([f'/home/{user}/dotfiles/autostart.sh'])
 
 def launchcmd(cmd):
     if terminal == "st":
@@ -35,6 +42,7 @@ def launch_keys():
 def admin_keys():
     ak = [
         K([m, "control"], "r", lazy.reload_config(), desc="Reload config"),
+        K([m, "control"], "s", lazy.reload_config(), desc="Restart qtile"),
         K([m, "control"], "q", lazy.shutdown(), desc="Shutdown"),
         K([], "XF86MonBrightnessUp", lazy.spawn(incbrightness("mon", 5)),
             desc="Increase brightness"),
@@ -106,6 +114,8 @@ def grow_window_keys():
         K([m, "control"], "j", j, desc=name("down")),
         K([m, "control"], "k", k, desc=name("up")),
         K([m, "control"], "l", l, desc=name("right")),
+        K([m, "control"], "i", lazy.layout.grow(), desc="Grow window"),
+        K([m, "control"], "m", lazy.layout.shrink(), desc="Shrink window"),
         K([m, "control"], "n", lazy.layout.normalize(), desc="Reset window size(s)")
     ]
     return gk
@@ -138,8 +148,9 @@ keys = [
 ]
 
 layouts = [
-    layout.MonadTall(margin=2),
-    layout.MonadWide(margin=2),
+    layout.MonadTall(margin=4),
+    layout.MonadWide(margin=4),
+    layout.MonadThreeCol(margin=4),
 ]
 
 
