@@ -1,5 +1,5 @@
 from libqtile import layout, bar, widget, hook
-from libqtile.config import Click, Drag, Group, Match, Screen
+from libqtile.config import Click, Drag, Group, Match, Screen, ScratchPad, DropDown
 from libqtile.config import Key as K, KeyChord as KC
 from libqtile.lazy import lazy
 import os
@@ -69,7 +69,8 @@ def layout_keys():
     lok = [
         K([m, "shift"], "Tab", lazy.layout.toggle_split(), 
             desc="Toggle b/t split and unsplit stacks"),
-        K([m], "Tab", lazy.next_layout(), desc="Switch to next layout")
+        K([m], "Tab", lazy.next_layout(), desc="Switch to next layout"),
+        K([m], "t", lazy.group["scratch"].dropdown_toggle("term")),
     ]
     return lok
 
@@ -135,7 +136,10 @@ def group_control_keys(groups):
         ])
     return gck
 
-groups = [Group(x) for x in 'ABCDE']
+groups = [
+        ScratchPad("scratch", [DropDown("term", "kitty", opacity=0.8),]),
+        *[Group(x) for x in 'abcde']
+]
 
 keys = [
     *launch_keys(),
@@ -144,15 +148,15 @@ keys = [
     *move_focus_keys(),
     *move_window_keys(),
     *grow_window_keys(),
-    *group_control_keys(groups),
+    *group_control_keys(groups[1:]),
 ]
 
 layouts = [
+    layout.MonadThreeCol(margin=4),
     layout.MonadTall(margin=4),
     layout.MonadWide(margin=4),
-    layout.MonadThreeCol(margin=4),
+    layout.Zoomy(margin=4),
 ]
-
 
 custombar1 = bar.Bar([
     widget.Clock(),
