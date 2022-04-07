@@ -4,9 +4,8 @@ enable_audio_bell no
 
 font_family InconsolataGo Nerd Font Complete Mono
 bold_font Inconsolatago Bold Nerd Font Complete Mono
-font_size 14.0
 
-background_opacity .85
+font_size 14.0
 
 #: Fonts {{{
 
@@ -2016,6 +2015,6 @@ enable_audio_bell no
 
 
 # BEGIN_KITTY_THEME
-# Idle Toes
+# 1984 Light
 include current-theme.conf
 # END_KITTY_THEME
