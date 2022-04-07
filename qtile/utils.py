@@ -34,7 +34,7 @@ def incvolume(inc):
     return cmd.format(*magdlt(inc))
 
 def rand_wallpaper():
-    d = "/home/homieja/Pictures/wallpapers/"
+    d = "/home/skippyelvis/Pictures/wallpapers/"
     f = os.listdir(d)
     r = random.randint(0, len(f)-1)
     return os.path.join(d, f[r])

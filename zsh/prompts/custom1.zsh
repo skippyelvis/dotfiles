@@ -1,0 +1,22 @@
+username_color="117"
+at_color="015"
+machine_color="207"
+cln_color="015"
+cdir_color="140"
+end_color="015"
+
+status_good_color="151"
+status_good="%F{${status_good_color}}:) %f" 
+status_bad_color="196"
+status_bad_bk_color="184"
+status_bad="%K{${status_bad_bk_color}}%F{${status_bad_color}}:(%f%k "
+status_="%(?.${status_good}.${status_bad})"
+
+user="%F{${username_color}}%n%f"
+at="%F{${at_color}}@%f"
+machine="%F{${machine_color}}%M%f"
+cln="%F{${cln_color}}:%f"
+cdir="%F{${cdir_color}}%2~%f"
+endp="%F{${end_color}}:%f"
+
+PROMPT="$status_${user}${at}${machine}${cln}${cdir}${endp} "

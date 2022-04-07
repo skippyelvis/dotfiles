@@ -1,18 +1,17 @@
 alias cl="clear"
-alias ls="exa --icons"
-alias cat="bat"
+alias l="exa --icons"
 alias vim="nvim"
 alias p3="python3"
 alias pipi="pip install --user"
-alias install="sudo pacman -S"
-alias yinstall="yay -S"
+alias pins="sudo pacman -S"
+alias yins="yay -S"
 alias icat="kitty +icat"
 
 export ix="ix.cs.uoregon.edu"
 export ixd="ix-dev.cs.uoregon.edu"
 
-alias sshix="ssh $uoid@$ix"
-alias sshixd="ssh $uoid@$ixd"
+alias sshix="ssh $UOID@$ix"
+alias sshixd="ssh $UOID@$ixd"
 
 export EDITOR="nvim"
 export RANGER_LOAD_DEFAULT_RC="FALSE"

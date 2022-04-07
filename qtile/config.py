@@ -7,18 +7,26 @@ from utils import incbrightness, incvolume, rand_wallpaper, spawnesc
 # my comfy qtile config
 
 m = "mod4"
+# terminal = "st"
+terminal = "kitty"
+
+def launchcmd(cmd):
+    if terminal == "st":
+        return f"st -e sh -c '{cmd}; exec bash'"
+    elif terminal == "kitty":
+        return f"kitty {cmd}"
 
 def launch_keys():
     name = lambda x: f"Launch {x}"
     lk = [
-        K([m], "Return", lazy.spawn("kitty"), desc=name("kitty terminal")),
+        K([m], "Return", lazy.spawn(terminal), desc=name("terminal emulator")),
         K([m, "shift"], "Return", lazy.spawn("google-chrome-stable"), desc=name("chrome")),
         K([m], "p", lazy.spawncmd(), desc=name("command")),
         KC([m], "0", [
-            K([], "t", *spawnesc("kitty")),
+            K([], "t", *spawnesc(terminal)),
             K([], "c", *spawnesc("google-chrome-stable")),
-            K([], "n", *spawnesc("kitty nvim")),
-            K([], "r", *spawnesc("kitty ranger")),
+            K([], "n", *spawnesc(launchcmd("nvim"))),
+            K([], "r", *spawnesc(launchcmd("ranger"))),
             K([], "m", *spawnesc("google-chrome-stable outlook.office.com/mail/")),
         ], mode="Launch")
     ]
