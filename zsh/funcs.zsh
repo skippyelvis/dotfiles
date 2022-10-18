@@ -7,3 +7,7 @@ func gpush() {
     git commit -m $1
     git push
 }
+
+func mvcd() {
+    mv $1 $2 && cd $2
+}

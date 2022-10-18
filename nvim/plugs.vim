@@ -21,7 +21,16 @@ call plug#begin("~/.vim/plugged")
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'lervag/vimtex'
+    Plug 'luochen1990/rainbow'
+    Plug 'lambdalisue/suda.vim'
 call plug#end()
+
+" rainbow
+let g:rainbow_active = 1
+
+" vimtex
+let g:vimtex_view_method = 'zathura'
 
 " airline
 let g:airline#extensions#tabline#enabled=1
@@ -64,8 +73,8 @@ set foldlevel=1
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 
 "colorscheme setup
-colorscheme jellybeans
-hi Comment cterm=italic
+"colorscheme jellybeans
+"hi Comment cterm=italic
 
 " ultisnips
 let g:UltiSnipsExpandTrigger="<C-e>"

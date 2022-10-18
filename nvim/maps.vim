@@ -33,3 +33,5 @@ nnoremap gf :vert winc f<cr>
 
 " copies pwd to clipboard: command yd
 :nnoremap <silent> yd :let @+=expand('%:p:h')<CR>
+
+cnoremap ww w !sudo tee > /dev/null %

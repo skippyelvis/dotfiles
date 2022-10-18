@@ -1,6 +1,6 @@
 alias cl="clear"
-alias ls="exa --icons"
-alias cat="bat"
+alias le="exa -l --icons"
+alias treee="exa --icons --tree"
 alias vim="nvim"
 alias p3="python3"
 alias pipi="pip install --user"
@@ -11,10 +11,21 @@ alias icat="kitty +icat"
 export ix="ix.cs.uoregon.edu"
 export ixd="ix-dev.cs.uoregon.edu"
 
-alias sshix="ssh $uoid@$ix"
-alias sshixd="ssh $uoid@$ixd"
+alias sshix="ssh $UOID@$ix"
+alias sshixd="ssh $UOID@$ixd"
 
 export EDITOR="nvim"
 export RANGER_LOAD_DEFAULT_RC="FALSE"
 
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/$USER/cli
+
+bak() {
+    cp $1 $1.bak
+}
+
+HISTFILE=~/.zsh_histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory
